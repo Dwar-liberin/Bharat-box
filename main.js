@@ -1,16 +1,25 @@
-import { videoLoader } from "https://cdn.jsdelivr.net/gh/aadarshbabu/lib/videoLoader/videoLoader.js";
-import { loadGLTF } from "https://cdn.jsdelivr.net/gh/aadarshbabu/lib/loader.js";
-import * as THREE from "three";
-import { MindARThree } from "mindar-image-three";
-import { FontLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "https://unpkg.com/three@0.160.0/examples/jsm/geometries/TextGeometry.js";
+// import { videoLoader } from "https://cdn.jsdelivr.net/gh/aadarshbabu/lib/videoLoader/videoLoader.js";
+// import { loadGLTF } from "https://cdn.jsdelivr.net/gh/aadarshbabu/lib/loader.js";
+// import * as THREE from "three";
+// import { MindARThree } from "mindar-image-three";
+// import { FontLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/FontLoader.js";
+// import { TextGeometry } from "https://unpkg.com/three@0.160.0/examples/jsm/geometries/TextGeometry.js";
+// import * as THREE from "./three.js-r132/build/three.module.js";
+import {
+  loadGLTF,
+  loadTexture,
+  loadTextures,
+  loadVideo,
+} from "https://cdn.jsdelivr.net/gh/Dwar-liberin/dwar-lib/libs/loader.js";
+
+const THREE = window.MINDAR.IMAGE.THREE;
 
 document.addEventListener("DOMContentLoaded", () => {
   async function start() {
     const textureLoader = new THREE.TextureLoader();
-    const mindThree = new MindARThree({
+    const mindThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
-      imageTargetSrc: "assets/target.mind",
+      imageTargetSrc: "./assets/targetBrocher.mind",
     });
 
     const { renderer, scene, camera } = mindThree;
@@ -19,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loadFont = () => {
       return new Promise((resolve, reject) => {
-        const loader = new FontLoader();
+        const loader = new THREE.FontLoader();
 
         loader.load(
           "https://cdn.jsdelivr.net/gh/mrdoob/three.js/examples/fonts/helvetiker_regular.typeface.json",
@@ -40,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       1,
       1.4361851332398317
     );
-    const target_image10e19e42e5d_texture = textureLoader.load(
+    const target_image10e19e42e5d_texture = await loadTexture(
       "assets/Image (2).jpg"
     );
     const target_image10e19e42e5d_image = new THREE.MeshBasicMaterial({
@@ -54,8 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
     target_image10e19e42e5d.position.set(0, 0, 0);
     target_image10e19e42e5d.rotation.set(0, 0, 0);
 
-    const logo_acfdc20e_461dacfdc_iconGeometry = new THREE.CircleGeometry(0.5);
-    const logo_acfdc20e_461dacfdc_texture = textureLoader.load(
+    const logo_acfdc20e_461dacfdc_iconGeometry = new THREE.CircleGeometry(
+      0.5,
+      32
+    );
+    const logo_acfdc20e_461dacfdc_texture = await loadTexture(
       "assets/circle-wa-sm_113.png"
     );
     const logo_acfdc20e_461dacfdc_image = new THREE.MeshBasicMaterial({
@@ -69,8 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     logo_acfdc20e_461dacfdc.position.set(-0.5, -2, 0);
     logo_acfdc20e_461dacfdc.rotation.set(0, 0, 0);
     logo_acfdc20e_461dacfdc.userData.clickable = true;
-    const logo_fa53a11b_6be8fa53a_iconGeometry = new THREE.CircleGeometry(0.5);
-    const logo_fa53a11b_6be8fa53a_texture = textureLoader.load(
+    const logo_fa53a11b_6be8fa53a_iconGeometry = new THREE.CircleGeometry(
+      0.5,
+      32
+    );
+    const logo_fa53a11b_6be8fa53a_texture = await loadTexture(
       "assets/circle-web-sm_114.png"
     );
     const logo_fa53a11b_6be8fa53a_image = new THREE.MeshBasicMaterial({
@@ -84,8 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
     logo_fa53a11b_6be8fa53a.position.set(0.2, -2, 0);
     logo_fa53a11b_6be8fa53a.rotation.set(0, 0, 0);
     logo_fa53a11b_6be8fa53a.userData.clickable = true;
-    const logo_7fe9733b_0dcb7fe97_iconGeometry = new THREE.CircleGeometry(0.5);
-    const logo_7fe9733b_0dcb7fe97_texture = textureLoader.load(
+    const logo_7fe9733b_0dcb7fe97_iconGeometry = new THREE.CircleGeometry(
+      0.5,
+      32
+    );
+    const logo_7fe9733b_0dcb7fe97_texture = await loadTexture(
       "assets/circle-mail-sm_125.png"
     );
     const logo_7fe9733b_0dcb7fe97_image = new THREE.MeshBasicMaterial({
@@ -100,20 +118,35 @@ document.addEventListener("DOMContentLoaded", () => {
     logo_7fe9733b_0dcb7fe97.rotation.set(0, 0, 0);
     logo_7fe9733b_0dcb7fe97.userData.clickable = true;
 
-    const [video_asset_4e2e1582d8e, video_asset_4e2e1582d8e_video] =
-      await videoLoader({
-        path: "assets/MicrosoftTeams-video.mp4",
-        ratio: 1,
-      });
+    // const [video_asset_4e2e1582d8e, video_asset_4e2e1582d8e_video] =
+    //   await videoLoader({
+    //     path: "assets/MicrosoftTeams-video.mp4",
+    //     ratio: 1,
+    //   });
+    const planeGeometry = new THREE.PlaneGeometry(1, 0.4);
+
+    const portfolioItem0Video = await loadVideo("assets/Bharat.mp4");
+
+    const portfolioItem0VideoTexture = new THREE.VideoTexture(
+      portfolioItem0Video
+    );
+    const portfolioItem0VideoMaterial = new THREE.MeshBasicMaterial({
+      map: portfolioItem0VideoTexture,
+    });
+
+    const video_asset_4e2e1582d8e = new THREE.Mesh(
+      planeGeometry,
+      portfolioItem0VideoMaterial
+    );
 
     video_asset_4e2e1582d8e.position.set(1.5, 0, 0);
 
     const isIOS = navigator.appVersion.indexOf("Mac") != -1 ? true : false;
 
-    video_asset_4e2e1582d8e_video.muted = isIOS;
-    video_asset_4e2e1582d8e_video.autoPlay = true;
+    portfolioItem0Video.muted = isIOS;
+    portfolioItem0Video.autoPlay = true;
 
-    video_asset_4e2e1582d8e.scale.set(1, 2, 1);
+    video_asset_4e2e1582d8e.scale.set(2, 2.7, 1);
 
     video_asset_4e2e1582d8e.rotation.set(0, 0, 0);
 
@@ -134,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (o.userData.clickable && o === logo_acfdc20e_461dacfdc) {
-          window.location.href = "https://wa.me/918100556677/?text=hi";
+          window.location.href = "https://wa.me/918175814482/?text=hi";
         }
 
         if (o.userData.clickable && o === logo_fa53a11b_6be8fa53a) {
@@ -155,11 +188,11 @@ document.addEventListener("DOMContentLoaded", () => {
     anchor.group.add(video_asset_4e2e1582d8e);
 
     anchor.onTargetFound = () => {
-      video_asset_4e2e1582d8e_video.play();
+      portfolioItem0Video.play();
     };
 
     anchor.onTargetLost = () => {
-      video_asset_4e2e1582d8e_video.pause();
+      portfolioItem0Video.pause();
     };
 
     await mindThree.start();
