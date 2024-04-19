@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mindThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: "./assets/target.mind",
+      uiLoading: "#example-scanning-overlay",
     });
 
     const { renderer, scene, camera } = mindThree;
@@ -171,7 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (o.userData.clickable && o === logo_fa53a11b_6be8fa53a) {
-          window.location.href = "https://bharatbox.sandbox.game/";
+          setTimeout(() => {
+            window.location.href = "https://bharatbox.sandbox.game/";
+          }, 100);
         }
 
         if (o.userData.clickable && o === logo_7fe9733b_0dcb7fe97) {
