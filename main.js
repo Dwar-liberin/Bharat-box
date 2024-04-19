@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const textureLoader = new THREE.TextureLoader();
     const mindThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
-      imageTargetSrc: "./assets/target.mind",
+      imageTargetSrc: "./assets/targetNew.mind",
       uiLoading: "#example-scanning-overlay",
     });
 
